@@ -1,10 +1,20 @@
 Push-Location (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent)
-$LocalCacheFolder = "D:\Source\Repos\Powershell"
+$LocalCacheFolder = "C:\Source\Repos\Powershell"
 $PSCodeRoot = "."
-$HasLocalCache = Test-Path "D:\Source\Repos\Powershell"
+$HasLocalCache = Test-Path "C:\Source\Repos\Powershell"
 
 if ($HasLocalCache)
 {
+  $PSCodeRoot= $LocalCacheFolder 
+
+  #TODO: Check if local profile.ps1 matches that in PSCodeRoot
+}
+else
+{
+#TODO: Cleanup logic.
+  $LocalCacheFolder = "D:\Source\Repos\Powershell"
+  $PSCodeRoot = "."
+  $HasLocalCache = Test-Path "D:\Source\Repos\Powershell"
   $PSCodeRoot= $LocalCacheFolder 
 }
 
@@ -44,27 +54,27 @@ function prompt {
 	return " "
 }
 
-if(-not (Test-Path Function:\DefaultTabExpansion)) {
-    Rename-Item Function:\TabExpansion DefaultTabExpansion
-}
+#if(-not (Test-Path Function:\DefaultTabExpansion)) {
+#    Rename-Item Function:\TabExpansion DefaultTabExpansion
+#}
 
 # Set up tab expansion and include git expansion
-function TabExpansion($line, $lastWord) {
-    $lastBlock = [regex]::Split($line, '[|;]')[-1]
+#function TabExpansion($line, $lastWord) {
+ #   $lastBlock = [regex]::Split($line, '[|;]')[-1]
     
-    switch -regex ($lastBlock) {
+  #  switch -regex ($lastBlock) {
         # Execute git tab completion for all git-related commands
-        'git (.*)' { GitTabExpansion $lastBlock }
+   #     'git (.*)' { GitTabExpansion $lastBlock }
         
         # Fall back on existing tab expansion
-        default { DefaultTabExpansion $line $lastWord }
-    }
-}
+    #    default { DefaultTabExpansion $line $lastWord }
+   # }
+#}
 
 function PS_Ctor
 {
 	## Set Powershell variables here
-	Set-Variable -name ScriptPath -value (Script_Path 'Scripts') -option Constant -scope Global -description "Home directory for Scripts"
+	##Set-Variable -name ScriptPath -value (Script_Path 'Scripts') -option Constant -scope Global -description "Home directory for Scripts"
 	#Set-Variable -name ModulePath -value (Script_Path 'Modules') -option Constant -scope Global -description "Home directory for Modules"
 	##Set-Variable -name TestPath -value (Script_Path 'Test-Scripts') -option Constant -scope Global -description "Home directory for Test scripts"
 	
@@ -84,7 +94,7 @@ PS_Ctor
 
 Enable-GitColors
 
-Glass
+#Glass
 
 Pop-Location
 
