@@ -20,19 +20,19 @@ Set-Alias ?? Coalesce-Args
 function Edit-Hosts { Smart-Edit c:\windows\system32\drivers\etc\hosts  }
 
 ## Editor Helpers.
-function Detect-EInstalled 
-{
-	Test-path $home\appdata\roaming\e
-}
+#function Detect-EInstalled 
+#{
+#	Test-path $home\appdata\roaming\e
+#}
 
 function Smart-Edit ([string] $s)
 {
-	if (Detect-EInstalled) {
-		e $s
-	}
-	else {
+	#if (Detect-EInstalled) {
+	#	e $s
+	#}
+	#else {
  		notepad $s
- 	}
+ 	#}
 }
 
 ## Gets the list of installed programs from the registry. Not perfect.
@@ -277,4 +277,15 @@ function notepad([string] $file = '')
        }
        notepad.exe ((convert-path $root) + '\' + (split-path -Leaf -Path $file))
    }
+}
+
+function Check-PoshSettings
+{
+    $success = Test-Path $PSScriptRoot
+    return $success;
+}
+
+function Check-ServiceBus
+{
+    az servicebus queue list --namespace shybot -g shybot
 }
